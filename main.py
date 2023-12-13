@@ -171,3 +171,106 @@ while True:
         str_date = datetime.datetime.now().strftime("%d %b %Y")
         print(f"The date is: {str_date}\n")
         speak(f"The date is: {str_date}")
+
+    elif "camera" in command or "photo" in command:
+        # Specifying the camera
+        camera = cv2.VideoCapture(0)
+
+        ret, frame = camera.read()
+        if ret:
+            cv2.imwrite("your_photo.png", frame)
+        camera.release()
+        cv2.destroyAllWindows()
+        print("Your photo was taken.\n")
+        speak("Your photo was taken.")
+
+    elif "screenshot" in command:
+        my_screenshot = pyautogui.screenshot()
+        my_screenshot.save("screenshot.png")
+        print("Screenshot was taken.\n")
+        speak("Screenshot was taken.")
+
+    elif "search" in command:
+        command = command.replace("search", "")
+        print(f"Searching {command}\n")
+        speak(f"Searching {command}")
+        webbrowser.open_new_tab(command)
+        time.sleep(5)
+
+    elif "question" in command:
+        print("Now i can answer your calculation and geography questions.\n")
+        speak("Now i can answer your calculation and geography questions.")
+
+        # Create an object from take_command() to ask the question.
+        question = take_command()
+
+        # Wolframalpha API
+        app_id = "P53EKT-QH6K4E499J"
+
+        # Create the client
+        client = wolframalpha.Client(app_id)
+
+        # Asking questions
+        res = client.query(question)
+
+        # The answer receiving and converting it to text.
+        answer = next(res.results).text
+
+        print(answer + "\n")
+        speak(answer)
+
+    elif "who are you" in command:
+        print("My name is Vici, I am version 1 of the voice assistant and, I was programmed by Mojtaba.\n")
+        speak("My name is Vici, I am version 1 of the voice assistant and, I was programmed by Mojtaba.")
+
+    elif "write note" in command:
+        print(f"What should i write {NAME}?\n")
+        speak(f"What should i write {NAME}?")
+
+        # Create an object from take_command() to ask the note text.
+        note = take_command()
+
+        print(f"{NAME}, Should I include date and time?\n")
+        speak(f"{NAME}, Should I include date and time?")
+
+        # Create an object from take_command() to ask for append the date and time.
+        ans = take_command()
+
+        if "y" in ans:
+            date_and_time = datetime.datetime.now().strftime("%A, %d. %B %Y %I:%M%p")
+            with open("note.txt", "w") as file:
+                file.write(date_and_time + "\n")
+                file.write("-" * 40 + "\n")
+                file.write(note)
+        else:
+            with open("note.txt", "w") as file:
+                file.write(note)
+
+    elif "show note" in command:
+        print("Showing the notes.\n")
+        speak("Showing the notes.")
+
+        with open("note.txt", "r") as file:
+            nt = file.read()
+            print(nt + "\n")
+            speak(nt)
+
+    elif "telegram" in command:
+        print("Opening Telegram!\n")
+        speak("Opening Telegram!")
+
+        os.startfile(r"C:\Program Files\WindowsApps"
+                     r"\TelegramMessengerLLP.TelegramDesktop_4.11.8.0_x64__t4vj0pshhgkwm\Telegram.exe")
+        time.sleep(5)
+
+    elif "whatsapp" in command:
+        print("Opening WhatsApp!\n")
+        speak("Opening WhatsApp!")
+
+        os.startfile(r"C:\Program Files\WindowsApps\5319275A.WhatsAppDesktop_2.2348.4.0_x64__cv1g1gvanyjgm\WhatsApp.exe")
+        time.sleep(5)
+
+    elif "logout" in command:
+        print("Your system will log out after 5 seconds!\n")
+        speak("Your system will log out after 5 seconds!")
+
