@@ -44,6 +44,7 @@ engine.setProperty('voice', voices[1].id)
 
 NAME = "none"
 
+
 # If needed, this command can be used to display the list of connected microphones.
 # for index, name in enumerate(sr.Microphone.list_microphone_names()):
 #     print("Microphone with name \"{1}\" found for 'Microphone(device_index={0})'".format(index, name))
@@ -108,7 +109,6 @@ def welcome():
 
 welcome()
 
-
 # ---------- Loop and conditions ----------
 
 while True:
@@ -117,7 +117,7 @@ while True:
 
     command = take_command().lower()
 
-    if "by" in command or "stop" in command:
+    if "by" in command or "stop" in command or "exit" in command:
         print(f"Goodbye {NAME}")
         speak(f"Goodbye {NAME}")
         break
@@ -267,10 +267,53 @@ while True:
         print("Opening WhatsApp!\n")
         speak("Opening WhatsApp!")
 
-        os.startfile(r"C:\Program Files\WindowsApps\5319275A.WhatsAppDesktop_2.2348.4.0_x64__cv1g1gvanyjgm\WhatsApp.exe")
+        os.startfile(
+            r"C:\Program Files\WindowsApps\5319275A.WhatsAppDesktop_2.2348.4.0_x64__cv1g1gvanyjgm\WhatsApp.exe")
         time.sleep(5)
 
     elif "logout" in command:
         print("Your system will log out after 5 seconds!\n")
         speak("Your system will log out after 5 seconds!")
+        time.sleep(5)
+        subprocess.call(["shutdown", "/l"])
 
+    elif "shutdown " in command:
+        print("Your system will shutdown after 5 seconds!\n")
+        speak("Your system will shutdown after 5 seconds!")
+        time.sleep(5)
+        subprocess.call(["shutdown", "/s"])
+
+    elif "restart" in command:
+        print("Your system will restart after 5 seconds!\n")
+        speak("Your system will restart after 5 seconds!")
+        time.sleep(5)
+        subprocess.call(["shutdown", "/r"])
+
+    elif "weather" in command:
+        api_key = "e48a2b3409d7d2fae60f4a279ca8556e"
+        base_url = "https://www.api..openweathermap.org/data/2.5/weather?"
+
+        print("What is the city name?\n")
+        speak("What is the city name?")
+
+        city_name = take_command()
+
+        complete_url = base_url + "appid=" + api_key + "&q=" + city_name
+
+        response = requests.get(complete_url)
+        res = response.json()
+        if res["code"] != "404":
+            main = res["main"]
+            temperature = main["temp"]
+            humidity = main["humidity"]
+            weather = res["weather"]
+            weather_description = weather[0]["description"]
+
+            print(f"Temperature in kelvin unit = {temperature}\n")
+            speak(f"Temperature in kelvin unit = {temperature}")
+
+            print(f"Humidity = {humidity}\n")
+            speak(f"Humidity = {humidity}")
+
+            print(f"Weather description = {weather_description}\n")
+            speak(f"Weather description = {weather_description}")
