@@ -1,9 +1,10 @@
-# Voice Assistant
-Voice assistant project, developed with Python.
-It has 20 features, such as announcing the weather, date, and time, opening the software, turning off the computer, etc.
+# VISI Assistant
+Visi is a voice assistant project developed with Python.
+It currently has more than 20 features, some of which I will mention here.
+Writing and reading text, searching in Google, searching in Wikipedia, showing the weather, announcing the date and time, opening the software, turning off the computer, etc.
 
 ### Python used version:
-Python 3.12.1
+Python 3.12.0
 
 ### Used python packages and their versions:
 Mouselnfo 0.1.3
