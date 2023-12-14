@@ -138,6 +138,15 @@ while True:
             pprint(result + "\n")
             speak(result)
 
+    elif "visi" in command or "hi" in command:
+        print(f"Hi {NAME}, How can i help you?\n")
+        speak(f"Hi {NAME}, How can i help you?")
+        command = take_command()
+
+    elif "who are you" in command:
+        print("My name is Visi, I am version 1 of the voice assistant and, I was programmed by Mojtaba.\n")
+        speak("My name is Visi, I am version 1 of the voice assistant and, I was programmed by Mojtaba.")
+
     elif "youtube" in command:
         webbrowser.open_new_tab("https://www.youtube.com")
         print("Opening Youtube!\n")
@@ -218,10 +227,6 @@ while True:
 
         print(answer + "\n")
         speak(answer)
-
-    elif "who are you" in command:
-        print("My name is Vici, I am version 1 of the voice assistant and, I was programmed by Mojtaba.\n")
-        speak("My name is Vici, I am version 1 of the voice assistant and, I was programmed by Mojtaba.")
 
     elif "write note" in command:
         print(f"What should i write {NAME}?\n")
