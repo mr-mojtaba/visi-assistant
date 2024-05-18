@@ -1,25 +1,26 @@
-# Need to install ( pip install pipwin )
-# Need to install ( pipwin install pyaudio )
+# Required installations
+# Install pipwin if not installed: pip install pipwin
+# Use pipwin to install pyaudio: pipwin install pyaudio
 
-# Need to install ( pip install SpeechRecognition )
+# Install the SpeechRecognition library(pip install SpeechRecognition)
 import speech_recognition as sr
 
-#  Need to install ( pip install pyttsx3 )
+#  Install the pyttsx3 library for text-to-speech(pip install pyttsx3)
 import pyttsx3
 
-#  Need to install ( pip install wikipedia )
+#  Install the wikipedia library for Wikipedia searches(pip install wikipedia)
 import wikipedia
 
-#  Need to install ( pip install wolframalpha )
+#  Install the wolframalpha library for WolframAlpha queries(pip install wolframalpha)
 import wolframalpha
 
-#  Need to install ( pip install requests )
+#  Install the requests library for HTTP requests(pip install requests)
 import requests
 
-#  Need to install ( pip install opencv-python )
+#  Install the OpenCV library for computer vision tasks(pip install opencv-python)
 import cv2
 
-#  Need to install ( pip install pyautogui )
+#  Install the pyautogui library for GUI automation(pip install pyautogui)
 import pyautogui
 
 # Standard python libraries
@@ -30,20 +31,20 @@ import time
 import subprocess
 from pprint import pprint
 
-# Creating an object for the text-to-speech engine.
+# Creating an object for the text-to-speech engine
 engine = pyttsx3.init()
 
-# Adjusting the engine speech speed.
+# Adjust the speech rate of the engine
 engine.setProperty('rate', 125)
 
-# Creating a Variable for adjusting the engine sound gender.
+# Get the available voices
 voices = engine.getProperty('voices')
 
-# Adjusting the engine sound gender.
+# Set the voice to the second voice in the list (commonly female voice)
 engine.setProperty('voice', voices[1].id)
 
+# Global variable to store the user's name
 NAME = "none"
-
 
 # If needed, this command can be used to display the list of connected microphones.
 # for index, name in enumerate(sr.Microphone.list_microphone_names()):
@@ -54,25 +55,25 @@ NAME = "none"
 
 # Text-to-speech function.
 def speak(text):
-    # saying the texts
+    # Saying the provided text
     engine.say(text)
     engine.runAndWait()
     engine.stop()
 
 
-# Function to listen and execute commands.
+# Function to listen and execute commands
 def take_command():
     r = sr.Recognizer()
 
-    # Activating the microphone.
+    # Activating the microphone
     with sr.Microphone() as source:
         print("Listening...")
         audio = r.listen(source)
 
         try:
-            # Listening to commands.
-            # For persian language -> ( fa-IR )
-            # For more language -> ( https://cloud.google.com/speech-to-text/docs/languages )
+            # Listening to commands
+            # For persian language -> (fa-IR)
+            # For more language -> (https://cloud.google.com/speech-to-text/docs/languages)
             cm = r.recognize_google(audio, language="en-US")
             print(f"You said: {cm}\n")
         except:
@@ -81,8 +82,7 @@ def take_command():
             return "None"
     return cm
 
-
-# Function for Welcoming and getting the user's name.
+# Function for welcoming the user and getting their name
 def welcome():
     hour = datetime.datetime.now().hour
     if 0 <= hour <= 12:
@@ -106,7 +106,7 @@ def welcome():
     print(f"Wellcome {NAME}. Lets start!\n")
     speak(f"Wellcome {NAME}. Lets start!")
 
-
+# Call the welcome function to start the assistant
 welcome()
 
 # ---------- Loop and conditions ----------
@@ -210,7 +210,7 @@ while True:
         print("Now i can answer your calculation and geography questions.\n")
         speak("Now i can answer your calculation and geography questions.")
 
-        # Create an object from take_command() to ask the question.
+        # Create an object from take_command() to ask the question
         question = take_command()
 
         # Wolframalpha API
@@ -222,7 +222,7 @@ while True:
         # Asking questions
         res = client.query(question)
 
-        # The answer receiving and converting it to text.
+        # Receiving and converting the answer to text
         answer = next(res.results).text
 
         print(answer + "\n")
@@ -232,13 +232,13 @@ while True:
         print(f"What should i write {NAME}?\n")
         speak(f"What should i write {NAME}?")
 
-        # Create an object from take_command() to ask the note text.
+        # Create an object from take_command() to ask the note text
         note = take_command()
 
         print(f"{NAME}, Should I include date and time?\n")
         speak(f"{NAME}, Should I include date and time?")
 
-        # Create an object from take_command() to ask for append the date and time.
+        # Create an object from take_command() to ask for append the date and time
         ans = take_command()
 
         if "y" in ans:
